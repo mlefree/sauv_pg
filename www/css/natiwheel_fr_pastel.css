@@ -1,0 +1,23 @@
+  
+
+#wheel1 {
+    background:url(../img/fr_pastel_recto_grand.png) 0 0 no-repeat;
+}
+
+#wheel2 {
+    background:url(../img/fr_pastel_recto_petit.png) 0 0 no-repeat;
+}
+
+
+#wheelA {
+    background:url(../img/wheel_a.png) 0 0 no-repeat;
+}
+
+
+#wrap .back {
+    background:url(../img/fr_pastel_verso.png) 0 0 no-repeat;
+}
+
+
+
+
