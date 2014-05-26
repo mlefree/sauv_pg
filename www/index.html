@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myNatiApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myNatiApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myNatiApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myNatiApp" class="no-js"> <!--<![endif]-->
+<head>
+    <title>NatiWheel</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="author" content="Sauvane">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="true" />
+    <!-- <meta name="viewport" content="user-scalable=no, width=user-device, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width,  initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/natiwheel.css">
+    <link id="natistyle" rel="stylesheet" type="text/css" href="css/natiwheel_fr_acidule.css">
+
+    <script language="javascript">
+    var blockMove = function (e) {
+            if (e.preventDefault) e.preventDefault() ;
+     }
+    </script>
+</head>
+<body>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+
+  <!--
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="navbar-inner">
+            <div class="row">
+
+                <div class="col-2" >
+                </div>
+                <div class="col-8" style="text-align: center;">
+                    <a id="lock"><i class="icon-lock icon-2x" style="padding: 6px;"></i></a>
+                    <a id="unlock"><i class="icon-unlock icon-2x" style="padding: 6px;"></i></a>
+                </div>
+                <div class="col-2" style="text-align: right;">
+                    <a href="#/help"><i class="icon-question-sign icon-2x" style="padding: 6px;"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  -->
+  <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav nav-justified">
+          <li><a>&nbsp;</a></li>
+          <li class="active">
+              <a class="btn" ng-show="isLocked"><i class="glyphicon glyphicon-play"></i></a>
+              <a class="btn" ng-hide="isLocked"><i class="glyphicon glyphicon-stop"></i></a>
+          </li>
+          <li>
+              <a href="#/help"><i class="glyphicon glyphicon-comment"></i></a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div ng-view></div>
+
+
+  <!-- App JS -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+
+</body>
+</html>
