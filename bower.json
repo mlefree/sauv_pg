@@ -1,0 +1,15 @@
+{
+  "name": "sauv_pg",
+  "description": "sauv_pg",
+  "version": "1.0.0",
+  "homepage": "na",
+  "license": "private",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-gestures": "latest",
+    "bootstrap": "latest"
+  }
+}

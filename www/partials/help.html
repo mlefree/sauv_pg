@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<!--
+<div class="modal fade in" style="display:inherit;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<div id="helpModal" class="modal fade in" style="display:inherit;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-body">
+            <div class="row">
+
+                <select id="natistyleSelector" class="form-control input-large">
+                    <option value="en_acide">Acidule (EN)</option>
+                    <option value="fr_acide" selected="selected">Acidule (FR)</option>
+                    <option value="fr_mixte">Mixte (FR)</option>
+                    <option value="fr_pastel">Pastel (FR)</option>
+                </select>
+                <br>
+            </div>
+            <div class="row">
+
+                <ul class="nav nav-tabs" id="myHelpTab">
+                  <li ng-class="{active:(helpLang == 'FR')}"><a ng-click="setHelpLang('FR')">Fran&ccedil;ais</a></li>
+                  <li ng-class="{active:(helpLang == 'EN')}"><a ng-click="setHelpLang('EN')">English</a></li>
+                </ul>
+
+                <div class="tab-content">
+                  <div class="tab-pane fade" ng-class="{'in active':(helpLang == 'FR')}">
+                    <h3>Utilisation</h3>
+                    <ol>
+                        <li>Tournez le disque sup&#233;rieur pour aligner le bon jour de l&#8217;ann&#233;e avec le jour de conception. Si
+                        vous ne le connaissez pas, vous pouvez utiliser le 1er jour des derni&#232;res r&#232;gles.
+                        </li>
+                        <li>Ce calage permet de conna&#238;tre les dates des examens de contr&#244;le, la date th&#233;orique
+                        d'accouchement et le signe zodiacal du f&#339;tus. </li>
+                        <li>Pour se situer dans la grossesse, faire pointer l&#8217;aiguille sur la date du jour. Ce second calage
+                        permet de conna&#238;tre sur le disque sup&#233;rieur l'&#226;ge gestationnel du f&#339;tus en semaines de
+                        grossesse (nombre de semaines depuis la conception) et en semaine d'am&#233;norrh&#233;e (nombre de
+                        semaines depuis le 1er jour des derni&#232;res r&#232;gles) et il permet la lecture du poids moyen du f&#339;tus
+                        (en gramme) et de sa taille moyenne (en centim&#232;tre). </li>
+                        <li>Au verso du disque se trouve pour chaque semaine de grossesse une note explicative sur le
+                        stade d'&#233;volution du f&#339;tus. </li>
+                    </ol>
+                    Retrouver la vid&#233;o explicative sur sauvane.com<br>
+
+
+                      <div>Angular seed app: v<span app-version></span></div>
+                      <p>This is the partial for view 2.</p>
+                      <p>
+                        Showing of 'interpolate' filter:
+                        {{ 'Current version is v%VERSION%.' | interpolate }}
+                      </p>
+
+                  </div>
+                  <div class="tab-pane fade" ng-class="{'in active':(helpLang == 'EN')}">
+                    <h3>How to use it :</h3>
+                    <ol>
+                    <li>Turn the top disc until you align the conception day to the correct day of
+                    the year. If you don't know the conception day, you can use the first day of
+                    your last menstrual period. Note: This period average is 28 days.
+                    If your period is for example 6 days longer, the conception day is probably 3 days
+                    later: Turn then the top disc 3 days clockwise. If it's 2 days less than the
+                    average, the conception day is probably 1 day sooner: Turn then the disk 1
+                    day anti-clockwise. </li>
+                    <li>This setup will let you know the antenatal exam dates, the expected date
+                    of delivery and baby zodiacal sign. </li>
+                    <li>Now you could use the central hand. Pointing it on the current date allows
+                    you to know the fetal age (number of weeks since conception), the gestation
+                    week number  (number of weeks since the first day of the last period), and
+                    the fetus likely weight and size ( grams / centimeters). </li>
+                    <li>On the backside of the disc, a note explains the fetus evolution stage for each
+                    week. </li>
+                    </ol>
+                    Find the explanation movie on the sauvane.com website.
+                  </div>
+                </div>
+
+
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-primary" href="#/disk">OK</a>
+          </div>
+
+        </div>
+    </div>
+</div>
