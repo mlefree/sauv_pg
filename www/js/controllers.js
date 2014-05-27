@@ -95,11 +95,18 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskActive2 = false;
     $scope.diskActive3 = false;
 
+
+
     // outside the scope
     var _diskZoom = $scope.diskZoom;
     var _diskDeg1 = $scope.diskDeg1;
     var _diskDeg2 = $scope.diskDeg2;
     var _diskDeg3 = $scope.diskDeg3;
+    var _wrapWidth = $("#wrap").width();
+    var _wrapHeight = $("#wrap").height();
+    var _wrapCenterX = Math.round(_wrapWidth / 2);
+    var _wrapCenterY = Math.round(_wrapHeight / 2);
+
     $scope.storeAnimations = function() {
 
       $scope.diskZoom = _diskZoom;
@@ -123,15 +130,32 @@ angular.module('myNatiApp.controllers', [])
     function _computeRotate(hmEvent, oldValue) {
       var value = 0;
       if (!oldValue) oldValue = 0;
-      value = (hmEvent.gesture.angle * hmEvent.gesture.distance) / ( 100 * Math.abs(hmEvent.gesture.angle));
-      value = oldValue - value;
+      //value = (hmEvent.gesture.angle * hmEvent.gesture.distance) / ( 100 * Math.abs(hmEvent.gesture.angle));
+      var absDiffX = hmEvent.gesture.deltaX / Math.abs(hmEvent.gesture.deltaX);
+      value = absDiffX * hmEvent.gesture.velocityX * 10;// + Math.sin(hmEvent.gesture.angle) * hmEvent.gesture.velocityY;
+      //console.log('value = '+value);
+      // console.log('hmEvent.gesture.angle = '+hmEvent.gesture.angle);
+      // console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
+      // console.log('hmEvent.gesture.deltaX = '+hmEvent.gesture.deltaX);
+      // console.log('hmEvent.gesture.deltaY = '+hmEvent.gesture.deltaY);
+      // console.log('hmEvent.gesture.velocityX = '+hmEvent.gesture.velocityX);
+      // console.log('hmEvent.gesture.velocityY = '+hmEvent.gesture.velocityY);
+      if (hmEvent.gesture.center.pageY < _wrapCenterY) value = oldValue + value;
+      else value = oldValue - value;
+
       return value;
     }
     function _computeZoom(hmEvent, oldValue) {
       var value = 0;
       if (!oldValue) oldValue = 1;
-      value = oldValue / hmEvent.gesture.distance * 100 ;
-      if (value > 0) value = 1 / Math.log10(value); else value = 1;
+      value = oldValue * hmEvent.gesture.scale;
+      console.log('hmEvent.gesture.scale = '+hmEvent.gesture.scale);
+      console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
+      console.log('hmEvent.gesture.deltaX = '+hmEvent.gesture.deltaX);
+      console.log('hmEvent.gesture.deltaY = '+hmEvent.gesture.deltaY);
+      console.log('hmEvent.gesture.velocityX = '+hmEvent.gesture.velocityX);
+      console.log('hmEvent.gesture.velocityY = '+hmEvent.gesture.velocityY);
+      //if (value > 0) value = 1 / Math.log10(value); else value = 1;
       return value;
     }
 
