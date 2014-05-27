@@ -87,6 +87,11 @@ angular.module('myNatiApp.controllers', [])
   .controller('CtrlDisk', ['$scope', function($scope) {
     'use strict';
 
+    $scope.diskZoom = window.localStorage.getItem('diskZoom',1);
+    $scope.diskDeg1 = window.localStorage.getItem('diskDeg1',0);
+    $scope.diskDeg2 = window.localStorage.getItem('diskDeg2',0);
+    $scope.diskDeg3 = window.localStorage.getItem('diskDeg3',0);
+
     $scope.diskIsFront = true;
     $scope.diskToggleFront = function(hmEvent){
       $scope.diskIsFront = !$scope.diskIsFront;
@@ -99,8 +104,12 @@ angular.module('myNatiApp.controllers', [])
 
       console.log('hm-rotate="handleGesture($event)"');
       console.log(hmEvent.type);
-      $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
+      $scope.diskRotateLog = hmEvent.type+' '+hmEvent.gesture.rotation;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
+
+      if (diskId == 1) $scope.diskDeg1 += hmEvent.gesture.rotation;
+      if (diskId == 2) $scope.diskDeg2 += hmEvent.gesture.rotation;
+      if (diskId == 3) $scope.diskDeg3 += hmEvent.gesture.rotation;
 
     };
 
