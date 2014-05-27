@@ -27,11 +27,8 @@
           <div class="modal-body">
             <div class="row">
 
-                <select id="natistyleSelector" class="form-control input-large">
-                    <option value="en_acide">Acidule (EN)</option>
-                    <option value="fr_acide" selected="selected">Acidule (FR)</option>
-                    <option value="fr_mixte">Mixte (FR)</option>
-                    <option value="fr_pastel">Pastel (FR)</option>
+                <select ng-model="navigStyle" class="form-control input-large" ng-options="style.title for style in navigStyles">
+                  <!--<option value="">-- Choose a theme --</option>-->
                 </select>
                 <br>
             </div>
@@ -59,15 +56,15 @@
                         <li>Au verso du disque se trouve pour chaque semaine de grossesse une note explicative sur le
                         stade d'&#233;volution du f&#339;tus. </li>
                     </ol>
-                    Retrouver la vid&#233;o explicative sur sauvane.com<br>
+                    Retrouver la vid&#233;o explicative sur http://www.sauvane.com<br>
 
-
+<!--
                       <div>Angular seed app: v<span app-version></span></div>
                       <p>This is the partial for view 2.</p>
                       <p>
                         Showing of 'interpolate' filter:
                         {{ 'Current version is v%VERSION%.' | interpolate }}
-                      </p>
+                      </p> -->
 
                   </div>
                   <div class="tab-pane fade" ng-class="{'in active':(helpLang == 'EN')}">

@@ -1,8 +1,8 @@
 
-
 // Declare app level module which depends on filters, and services
 angular.module('myNatiApp', [
   'ngRoute',
+  'angular-gestures',
   'myNatiApp.filters',
   'myNatiApp.services',
   'myNatiApp.directives',

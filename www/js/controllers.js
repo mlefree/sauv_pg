@@ -1,15 +1,108 @@
 
 
-/* Controllers */
+// Controllers
+
+
 
 angular.module('myNatiApp.controllers', [])
+  .controller('CtrlNavigation', ['$scope', function($scope) {
+    'use strict';
+
+    // Disk Lock
+    $scope.navigIsLocked = window.localStorage.getItem("navigIsLocked", false);
+    $scope.navigToggleLock = function(){
+      $scope.navigIsLocked = !$scope.navigIsLocked;
+      window.localStorage.setItem("navigIsLocked", $scope.navigIsLocked);
+    };
+
+
+
+    $scope.navigStyles =  [
+                            {code:'en_acide',   css:'css/natiwheel_en_acidule.css',  title:'Acidule (EN)'},
+                            {code:'fr_acide',   css:'css/natiwheel_fr_acidule.css',  title:'Acidule (FR)'},
+                            {code:'fr_mixte',   css:'css/natiwheel_fr_mixte.css',    title:'Mixte (FR)'},
+                            {code:'fr_pastel',   css:'css/natiwheel_fr_pastel.css',  title:'Pastel (FR)'}
+                          ];
+    $scope.navigStyle = JSON.parse(window.localStorage.getItem('navigStyle'));
+    $scope.setNavigStyle = function(styleCode){
+        if (!styleCode) {
+          // Init Style
+          if (!$scope.navigStyle || !$scope.navigStyle.code) {
+              $scope.navigStyle = $scope.navigStyles[0];
+          }
+          styleCode = $scope.navigStyle.code;
+        }
+
+        for(var i = 0; i < $scope.navigStyles.length; i++){
+          var nstyle = $scope.navigStyles[i];
+          if (nstyle.code == styleCode){
+            // Set the style
+            $scope.navigStyle = nstyle;
+            $('#natistyle').attr({href : $scope.navigStyle.css});
+            window.localStorage.setItem("navigStyle", JSON.stringify($scope.navigStyle));
+          }
+        }
+    };
+    $scope.setNavigStyle();
+
+
+
+            $('#f1').click(function() {
+                //alert('F1');
+                var data = {direction:'left', velocity : 2};
+                handleTouchyDrag(null,null, data);
+            });
+            $('#f2').click(function() {
+                //alert('F2');
+                var data = {direction:'right', velocity : 2};
+                handleTouchyDrag(null,null, data);
+            });
+
+            // $('#natistyleSelector').change(function() {
+            //
+            //     var style = $("#natistyleSelector").val();
+            //     setStyle(style);
+            // });
+
+
+
+
+  }])
   .controller('CtrlHelp', ['$scope', function($scope) {
     'use strict';
+    $scope.helpLang = window.localStorage.getItem('helpLang','EN');
+    $scope.setHelpLang = function(langCode){
+      $scope.helpLang = langCode;
+      window.localStorage.setItem('helpLang',$scope.helpLang);
+    };
+
+
+    $scope.$on('$destroy', function (event) {
+        var langCode = ($scope.navigStyle && $scope.navigStyle.code) ? $scope.navigStyle.code : null;
+        $scope.setNavigStyle(langCode);
+    });
+
+
   }])
   .controller('CtrlDisk', ['$scope', function($scope) {
     'use strict';
 
+    $scope.diskIsFront = true;
+    $scope.diskToggleFront = function(){
+      $scope.diskIsFront = !$scope.diskIsFront;
+    };
 
+    $scope.diskRotateLog = 'na';
+    $scope.diskRotate = function(hmEvent) {
+
+      console.log('hm-rotate="handleGesture($event)"');
+      console.log(hmEvent.type);
+      $scope.diskRotateLog = JSON.stringify(hmEvent);
+      //$scope.type = evhmEventent.type;
+
+    };
+
+    /*
     var degs1 = 0;
     var degs2 = 0;
     var degs3 = 0;
@@ -18,45 +111,21 @@ angular.module('myNatiApp.controllers', [])
     var recto = true;
     var zoom = 1;
 
-    //var wheelFrame = $("#frame");
-    //var zoomIn = $("#zoomIn");
-    //var zoomOut = $("#zoomOut");
 
-    //var frameWidth = $("#wrap").width();
-    //var frameHeight = $("#wrap").height();
 
     var bodyWidth = $("body").width();
 
 
 
-    var setStyle = function(style){
+                zoom = zoom * bodyWidth / 1280;
+                degs1 = getDeg(1);
+                degs2 = getDeg(2);
+                degs3 = getDeg(3);
+                handleTouchyPinch();
+                handleTouchyReset();
 
 
-        //alert(style);
-        if ( style == "en_acide") {
-            $('#natistyle').attr({href : 'css/natiwheel_en_acidule.css'});
-        }
-        else if ( style == "fr_acide") {
-            $('#natistyle').attr({href : 'css/natiwheel_fr_acidule.css'});
-        }
-        else if ( style == "fr_mixte") {
-            $('#natistyle').attr({href : 'css/natiwheel_fr_mixte.css'});
-        }
-        else if ( style == "fr_pastel") {
-            $('#natistyle').attr({href : 'css/natiwheel_fr_pastel.css'});
-        }
 
-        window.localStorage.setItem("style", style);
-    };
-
-    var getStyle = function(){
-
-        var style =  'css/natiwheel.css';
-        if (typeof window.localStorage["style"] != 'undefined')
-            style = window.localStorage.getItem("style");
-
-        setStyle(style);
-    };
 
     var setDeg = function(deg, id){
 
@@ -189,19 +258,6 @@ angular.module('myNatiApp.controllers', [])
             //console.log('handleTouchyPinch '+parent.wheelFrame.width());
 
 
-
-    /*
-            if (data.scale > 1)
-                zoom = Math.round(zoom *2);
-            else
-                zoom = Math.round(zoom /2);
-
-            alert("zoom : "+zoom);
-
-            $('#extViewportMeta').remove();
-            $('head').append('<meta id="extViewportMeta" name="viewport" content="width=320, initial-scale='+zoom+'.0, user-scalable=no" />');
-            */
-
     };
 
     var unbindAll = function() {
@@ -221,110 +277,7 @@ angular.module('myNatiApp.controllers', [])
         $("#wrap .back").bind('touchy-pinch', handleTouchyPinch);
         $("#mainFunction").bind('touchy-rotate', handleTouchyRotateAll);
     };
-
-
-
-    $(document).ready(function(){
-
-
-    /*
-        $("#zoomOut").click(function() {
-
-            if(zoom <= 0.5) zoom = 0.25;
-            else
-                zoom = Math.round(zoom*100 / 2)/100;
-            handleTouchyPinch();
-         });
-
-        $("#zoomIn").click(function() {
-            if(zoom >= 1) zoom = 2;
-            else
-                zoom = Math.round(zoom*10 * 2)/10;
-            handleTouchyPinch();
-         });
-
-        $('#p1').click(function() {
-
-            degs1 = getDeg(1) + 10;
-            degs2 = getDeg(2) + 10;
-            degs3 = getDeg(3) + 10;
-            setDeg(degs1, 1);
-            setDeg(degs2, 2);
-            setDeg(degs3, 3);
-            handleTouchyReset();
-
-        });
-        $('#m1').click(function() {
-
-            degs1 = getDeg(1) - 10;
-            degs2 = getDeg(2) - 10;
-            degs3 = getDeg(3) - 10;
-            setDeg(degs1, 1);
-            setDeg(degs2, 2);
-            setDeg(degs3, 3);
-            handleTouchyReset();
-
-        });*/
-        $('#f1').click(function() {
-            //alert('F1');
-            var data = {direction:'left', velocity : 2};
-            handleTouchyDrag(null,null, data);
-        });
-        $('#f2').click(function() {
-            //alert('F2');
-            var data = {direction:'right', velocity : 2};
-            handleTouchyDrag(null,null, data);
-        });
-
-        $('#natistyleSelector').change(function() {
-
-            var style = $("#natistyleSelector").val();
-            setStyle(style);
-        });
-
-        $('.navbar-brand').click(function(){
-            var url = "http://www.sauvane.com";
-            //navigator.app.loadUrl(url, { openExternal:true } );
-            //window.location.href = url;
-           // var ref = window.open(encodeURI(url), "_system");
-            //window.open(url, "_system","location=yes");
-        });
-
-
-        //set style
-        getStyle();
-
-        // Lock
-        $("#unlock").hide();
-        $("#mainFunction").show();
-        $("#lock").click(function(){
-            $("#mainFunction").hide();
-            $("#lock").hide();
-            $("#unlock").show();
-        });
-        $("#unlock").click(function(){
-            $("#mainFunction").show();
-            $("#unlock").hide();
-            $("#lock").show();
-        });
-
-
-        zoom = zoom * bodyWidth / 1280;
-        degs1 = getDeg(1);
-        degs2 = getDeg(2);
-        degs3 = getDeg(3);
-        handleTouchyPinch();
-        handleTouchyReset();
-
-
-        // Bind events
-        bindAll();
-
-        //$('#myHelpTab a:last').tab('show');
-
-
-
-    });
+*/
 
 
   }]);

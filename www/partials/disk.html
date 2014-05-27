@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 
 <div    id="f1"
-        style="position:absolute;top:20px;left:20px">
-    <i class="icon-reply icon-2x"></i>
+        style="position:absolute;top:0;left:0"
+        class="btn btn-lg"
+        ng-show="diskIsFront"
+        ng-click="diskToggleFront()">
+    <i class="glyphicon glyphicon-info-sign"></i>
 </div>
 <div    id="f2"
-        style="position:absolute;top:20px;left:20px; display:none">
-    <i class="icon-share-alt icon-2x"></i>
+        style="position:absolute;top:0;left:0"
+        class="btn btn-lg"
+        ng-hide="diskIsFront"
+        ng-click="diskToggleFront()">
+    <i class="glyphicon glyphicon-ok-sign"></i>
 </div>
 
-<div id="wrap">
-    <div class="front">
+log:{{diskRotateLog}}
+
+<div id="wrap"
+    hm-swipe-left="diskToggleFront()" hm-swipe-right="diskToggleFront()"
+    hm-rotate="diskRotate($event)">
+    <div class="front" ng-show="diskIsFront">
         <div id="wheel1"></div>
         <div id="wheel2"></div>
         <div id="wheelA"></div>
     </div>
-    <div class="back">
+    <div class="back" ng-hide="diskIsFront">
     </div>
     <div id="mainFunction">
     </div>
