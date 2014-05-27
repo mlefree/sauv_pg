@@ -91,6 +91,9 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskDeg1 = window.localStorage.getItem('diskDeg1',0);
     $scope.diskDeg2 = window.localStorage.getItem('diskDeg2',0);
     $scope.diskDeg3 = window.localStorage.getItem('diskDeg3',0);
+    $scope.diskActive1 = false;
+    $scope.diskActive2 = false;
+    $scope.diskActive3 = false;
 
     $scope.diskIsFront = true;
     $scope.diskToggleFront = function(hmEvent){
@@ -100,17 +103,36 @@ angular.module('myNatiApp.controllers', [])
     };
 
     $scope.diskRotateLog = 'na';
+    function _computeRotate(hmEvent, oldValue) {
+      var value = 0;
+      if (!oldValue) oldValue = 0;
+      value = (hmEvent.gesture.angle * hmEvent.gesture.distance) / ( 100 * Math.abs(hmEvent.gesture.angle));
+      value = oldValue - value;
+      return value;
+    }
+
     $scope.diskRotate = function(diskId, hmEvent) {
 
-      console.log('hm-rotate="handleGesture($event)"');
+      //console.log('hm-rotate="handleGesture($event)"');
       console.log(hmEvent.type);
       $scope.diskRotateLog = hmEvent.type+' '+hmEvent.gesture.rotation;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
 
-      if (diskId == 1) $scope.diskDeg1 += hmEvent.gesture.rotation;
-      if (diskId == 2) $scope.diskDeg2 += hmEvent.gesture.rotation;
-      if (diskId == 3) $scope.diskDeg3 += hmEvent.gesture.rotation;
+      if (diskId == 1 && $scope.diskActive1) $scope.diskDeg1 = _computeRotate(hmEvent,$scope.diskDeg1);
+      if (diskId == 2 && $scope.diskActive2) $scope.diskDeg2 = _computeRotate(hmEvent,$scope.diskDeg2);
+      if (diskId == 3 && $scope.diskActive3) $scope.diskDeg3 = _computeRotate(hmEvent,$scope.diskDeg3);
 
+    };
+    $scope.diskRotateStart = function(diskId, hmEvent) {
+      if ($scope.diskActive1 || $scope.diskActive2 || $scope.diskActive3) return;
+      if (diskId == 1) $scope.diskActive1 = true;
+      if (diskId == 2) $scope.diskActive2 = true;
+      if (diskId == 3) $scope.diskActive3 = true;
+    };
+    $scope.diskRotateEnd = function(diskId, hmEvent) {
+      $scope.diskActive1 = false;
+      $scope.diskActive2 = false;
+      $scope.diskActive3 = false;
     };
 
     $scope.diskPinch = function(hmEvent) {
