@@ -99,6 +99,8 @@ angular.module('myNatiApp.controllers', [])
 
     // outside the scope
     var _diskZoom = $scope.diskZoom;
+    var _diskTurnClockwize = true;
+    var _diskTurnClockwizeLocked = false;
     var _diskDeg1 = $scope.diskDeg1;
     var _diskDeg2 = $scope.diskDeg2;
     var _diskDeg3 = $scope.diskDeg3;
@@ -110,9 +112,9 @@ angular.module('myNatiApp.controllers', [])
     $scope.storeAnimations = function() {
 
       $scope.diskZoom = _diskZoom;
-      $scope.diskDeg1 = _diskDeg1;
-      $scope.diskDeg2 = _diskDeg2;
-      $scope.diskDeg3 = _diskDeg3;
+      $scope.diskDeg1 = _diskDeg1 % 360;
+      $scope.diskDeg2 = _diskDeg2 % 360;
+      $scope.diskDeg3 = _diskDeg3 % 360;
       window.localStorage.getItem('diskZoom',$scope.diskZoom);
       window.localStorage.getItem('diskDeg1',$scope.diskDeg1);
       window.localStorage.getItem('diskDeg2',$scope.diskDeg2);
@@ -131,8 +133,14 @@ angular.module('myNatiApp.controllers', [])
       var value = 0;
       if (!oldValue) oldValue = 0;
       //value = (hmEvent.gesture.angle * hmEvent.gesture.distance) / ( 100 * Math.abs(hmEvent.gesture.angle));
-      var absDiffX = hmEvent.gesture.deltaX / Math.abs(hmEvent.gesture.deltaX);
-      value = absDiffX * hmEvent.gesture.velocityX * 10;// + Math.sin(hmEvent.gesture.angle) * hmEvent.gesture.velocityY;
+      if (!_diskTurnClockwizeLocked) {
+        _diskTurnClockwizeLocked = true;
+        _diskTurnClockwize = ((hmEvent.gesture.deltaX / Math.abs(hmEvent.gesture.deltaX) ) > 0);
+        if (hmEvent.gesture.center.pageY > _wrapCenterY) _diskTurnClockwize = !_diskTurnClockwize;
+      }
+      var turn = _diskTurnClockwize ? 1 : -1;
+
+      value = turn * Math.abs(hmEvent.gesture.velocityX + hmEvent.gesture.velocityY) * 10;// + Math.sin(hmEvent.gesture.angle) * hmEvent.gesture.velocityY;
       //console.log('value = '+value);
       // console.log('hmEvent.gesture.angle = '+hmEvent.gesture.angle);
       // console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
@@ -140,8 +148,7 @@ angular.module('myNatiApp.controllers', [])
       // console.log('hmEvent.gesture.deltaY = '+hmEvent.gesture.deltaY);
       // console.log('hmEvent.gesture.velocityX = '+hmEvent.gesture.velocityX);
       // console.log('hmEvent.gesture.velocityY = '+hmEvent.gesture.velocityY);
-      if (hmEvent.gesture.center.pageY < _wrapCenterY) value = oldValue + value;
-      else value = oldValue - value;
+      value = oldValue + value;
 
       return value;
     }
@@ -190,6 +197,7 @@ angular.module('myNatiApp.controllers', [])
       $scope.diskActive1 = false;
       $scope.diskActive2 = false;
       $scope.diskActive3 = false;
+      _diskTurnClockwizeLocked = false;
       $scope.storeAnimations();
     };
 
