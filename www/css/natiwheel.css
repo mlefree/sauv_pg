@@ -42,11 +42,13 @@ h1, p {
 #mainFunction, #main , #wrap{
     width:1280px;
     height:1280px;
-    position:absolute;
+    position:relative;
     top:0;
     left:0;
     padding:0;
     overflow:hidden;
+            overflow-y: hidden;
+            overflow-x: hidden;
 
     border-radius:600px;
 }
@@ -100,7 +102,7 @@ h1, p {
 }
 
 
-
+/*
 .switch-on, .switch-off{
     height:43px;
 }
@@ -124,7 +126,7 @@ h1, p {
 
 
 
-/*
+
 
 #wrap {
    float: left;
@@ -146,6 +148,7 @@ h1, p {
     width: inherit;
     height: inherit;
     */
+        position:relative;
 
    -webkit-transform-style: preserve-3d;
     transform-origin: 50% 50%;
@@ -199,7 +202,7 @@ h1, p {
     -webkit-transition: rotateY .4s ease-in-out;
     transition: rotateY .4s ease-in-out;*/
 
-    position:absolute;
+    position:relative;
     margin:40px;
     width:1200px;
     height:1200px;

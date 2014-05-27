@@ -14,9 +14,9 @@
     <access origin="*"/>
 
     <gap:platform name="ios" />
-    <gap:platform name="android" />
+    <!--<gap:platform name="android" />
     <gap:platform name="blackberry" />
-    <gap:platform name="winphone" />
+    <gap:platform name="winphone" />-->
 
     <preference name="phonegap-version" value="3.4.0" />
 
