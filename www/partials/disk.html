@@ -19,7 +19,8 @@ log:{{diskRotateLog}}
 
 <div id="wrap"
     hm-swipe-left="diskToggleFront()" hm-swipe-right="diskToggleFront()"
-    hm-rotate="diskRotate($event)">
+    hm-rotate="diskRotate($event)"
+    hm-pinch="diskRotate($event)">
     <div class="front" ng-show="diskIsFront">
         <div id="wheel1"></div>
         <div id="wheel2"></div>
