@@ -1,4 +1,4 @@
-  
+
 * {
     -webkit-touch-callout: none;
     -webkit-user-select:none;
@@ -11,6 +11,16 @@ body {
     background:white;
     color:#333;
     font-family:Helvetica;
+
+    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+    -webkit-user-drag: none; /* IMPORTANT : prevent Chrome to drag by itself */
+    -webkit-user-modify: none;
+    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+
+    -webkit-overflow-scrolling: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow: hidden;
 }
 h1, p {
     padding:0;
@@ -30,7 +40,7 @@ h1, p {
     left:0;
     padding:0;
     overflow:hidden;
-    
+
     border-radius:600px;
 }
 
@@ -73,12 +83,12 @@ h1, p {
     z-index:12;
 }
 
-#mainFunction{    
+#mainFunction{
     z-index:13;
 }
 
 
-#f1, #f2{    
+#f1, #f2{
     z-index:15;
 }
 
@@ -116,7 +126,7 @@ h1, p {
     margin: 20px;
     position: relative;
     font-size: .8em;
-    
+
     -webkit-perspective: 1200px;
     -moz-perspective: 1200px;
 }*/
@@ -129,7 +139,7 @@ h1, p {
     width: inherit;
     height: inherit;
     */
-    
+
    -webkit-transform-style: preserve-3d;
     transform-origin: 50% 50%;
     -webkit-transform: rotateY(0deg);
@@ -137,14 +147,14 @@ h1, p {
 
 
    -webkit-transition: all 1s;
-   
+
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    
+
     -moz-transform: rotateX(0deg) rotateY(0deg);
     -moz-transform-style: preserve-3d;
     -moz-backface-visibility: hidden;
-    
+
     -o-transition: all .4s ease-in-out;
     -ms-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
@@ -161,21 +171,21 @@ h1, p {
     width: inherit;
     height: inherit;*/
     pointer-events:  none;
-     
+
    -webkit-transform-style: preserve-3d;
     transform-origin: 50% 50%;
     -webkit-transform: rotateY(-180deg);
-   /* 
+   /*
 
    -webkit-transition: all 1s;
 
    -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    
+
     -moz-transform: rotateX(-180deg);
     -moz-transform-style: preserve-3d;
     -moz-backface-visibility: hidden;
-    
+
     -o-transition: rotateY .4s ease-in-out;
     -ms-transition: rotateY .4s ease-in-out;
     -moz-transition: rotateY .4s ease-in-out;
@@ -203,7 +213,3 @@ h1, p {
     z-index: 1000;
     -webkit-transform: rotateY(0deg);
 }
-
-
-
-

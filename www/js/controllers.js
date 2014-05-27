@@ -115,11 +115,11 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskIsFront = true;
     $scope.diskToggleFront = function(hmEvent){
       $scope.diskIsFront = !$scope.diskIsFront;
-      console.log(hmEvent.type);
-      $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
+      //console.log(hmEvent.type);
+      //$scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
     };
 
-    $scope.diskRotateLog = 'na';
+    //$scope.diskRotateLog = 'na';
     function _computeRotate(hmEvent, oldValue) {
       var value = 0;
       if (!oldValue) oldValue = 0;
@@ -143,15 +143,15 @@ angular.module('myNatiApp.controllers', [])
 
       if (diskId == 1 && $scope.diskActive1) {
           _diskDeg1 = _computeRotate(hmEvent,_diskDeg1);
-          $('#wheel1').css('webkitTransform','rotate('+ _diskDeg1 +'deg)');
+          $('#wheel1').css('-webkit-transform','rotate('+ _diskDeg1 +'deg)');
       }
       if (diskId == 2 && $scope.diskActive2){
           _diskDeg2 = _computeRotate(hmEvent,_diskDeg2);
-          $('#wheel2').css('webkitTransform','rotate('+ _diskDeg2 +'deg)');
+          $('#wheel2').css('-webkit-transform','rotate('+ _diskDeg2 +'deg)');
       }
       if (diskId == 3 && $scope.diskActive3){
           _diskDeg3 = _computeRotate(hmEvent,_diskDeg3);
-          $('#wheelA').css('webkitTransform','rotate('+ _diskDeg3 +'deg)');
+          $('#wheelA').css('-webkit-transform','rotate('+ _diskDeg3 +'deg)');
       }
 
     };
@@ -172,7 +172,7 @@ angular.module('myNatiApp.controllers', [])
 
       //console.log('hm-pinch="handleGesture($event)"');
       console.log(hmEvent.type);
-      $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
+      //$scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
       $scope.diskZoom = _computeZoom(hmEvent,$scope.diskZoom);
 

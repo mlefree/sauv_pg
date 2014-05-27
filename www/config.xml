@@ -7,7 +7,7 @@
     version     = "14.03.23">
 
     <name>NatiWheel</name>
-    <description>NatiWheel</description>
+    <description>NatiWheel : The pregnancy wheel of Sauvane.com</description>
     <author email="contact@sauvane.com" href="http://www.sauvane.com">Sauvane</author>
 
     <access origin="file:///" subdomains="true" />
