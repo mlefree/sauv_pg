@@ -143,7 +143,7 @@ angular.module('myNatiApp.controllers', [])
 
     $scope.diskPinch = function(hmEvent) {
 
-      console.log('hm-pinch="handleGesture($event)"');
+      //console.log('hm-pinch="handleGesture($event)"');
       console.log(hmEvent.type);
       $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
