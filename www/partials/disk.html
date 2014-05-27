@@ -16,20 +16,20 @@
 </div>
 
 log:{{diskRotateLog}}
+<!--
 
-<div id="wrap"
     hm-swipe="diskToggleFront($event)"
-    hm-rotate="diskRotate($event)"
-    hm-pinch="diskRotate($event)">
+    hm-pinch="diskPinch($event)"
+-->
+<div id="wrap">
     <div class="front" ng-show="diskIsFront">
-        <div id="wheel1"></div>
-        <div id="wheel2"></div>
-        <div id="wheelA"></div>
+        <div id="wheel1" hm-rotate="diskRotate(1,$event)"></div>
+        <div id="wheel2" hm-rotate="diskRotate(2,$event)"></div>
+        <div id="wheelA" hm-rotate="diskRotate(3,$event)"></div>
     </div>
-    <div class="back" ng-hide="diskIsFront">
-    </div>
-    <div id="mainFunction">
-    </div>
+    <div class="back" ng-hide="diskIsFront"></div>
+    <!--<div id="mainFunction">
+    </div>-->
 </div>
 
 

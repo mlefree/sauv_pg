@@ -95,9 +95,18 @@ angular.module('myNatiApp.controllers', [])
     };
 
     $scope.diskRotateLog = 'na';
-    $scope.diskRotate = function(hmEvent) {
+    $scope.diskRotate = function(diskId, hmEvent) {
 
       console.log('hm-rotate="handleGesture($event)"');
+      console.log(hmEvent.type);
+      $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
+      //$scope.type = evhmEventent.type;
+
+    };
+
+    $scope.diskPinch = function(hmEvent) {
+
+      console.log('hm-pinch="handleGesture($event)"');
       console.log(hmEvent.type);
       $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
