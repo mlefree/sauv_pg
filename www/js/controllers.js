@@ -95,6 +95,23 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskActive2 = false;
     $scope.diskActive3 = false;
 
+    // outside the scope
+    var _diskZoom = $scope.diskZoom;
+    var _diskDeg1 = $scope.diskDeg1;
+    var _diskDeg2 = $scope.diskDeg2;
+    var _diskDeg3 = $scope.diskDeg3;
+    $scope.storeAnimations = function() {
+
+      $scope.diskZoom = _diskZoom;
+      $scope.diskDeg1 = _diskDeg1;
+      $scope.diskDeg2 = _diskDeg2;
+      $scope.diskDeg3 = _diskDeg3;
+      window.localStorage.getItem('diskZoom',$scope.diskZoom);
+      window.localStorage.getItem('diskDeg1',$scope.diskDeg1);
+      window.localStorage.getItem('diskDeg2',$scope.diskDeg2);
+      window.localStorage.getItem('diskDeg3',$scope.diskDeg3);
+    };
+
     $scope.diskIsFront = true;
     $scope.diskToggleFront = function(hmEvent){
       $scope.diskIsFront = !$scope.diskIsFront;
@@ -120,13 +137,22 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskRotate = function(diskId, hmEvent) {
 
       //console.log('hm-rotate="handleGesture($event)"');
-      console.log(hmEvent.type);
-      $scope.diskRotateLog = hmEvent.type+' '+hmEvent.gesture.rotation;//JSON.stringify(hmEvent.gesture);
+      //console.log(hmEvent.type);
+      //$scope.diskRotateLog = hmEvent.type+' '+hmEvent.gesture.rotation;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
 
-      if (diskId == 1 && $scope.diskActive1) $scope.diskDeg1 = _computeRotate(hmEvent,$scope.diskDeg1);
-      if (diskId == 2 && $scope.diskActive2) $scope.diskDeg2 = _computeRotate(hmEvent,$scope.diskDeg2);
-      if (diskId == 3 && $scope.diskActive3) $scope.diskDeg3 = _computeRotate(hmEvent,$scope.diskDeg3);
+      if (diskId == 1 && $scope.diskActive1) {
+          _diskDeg1 = _computeRotate(hmEvent,_diskDeg1);
+          $('#wheel1').css('webkitTransform','rotate('+ _diskDeg1 +'deg)');
+      }
+      if (diskId == 2 && $scope.diskActive2){
+          _diskDeg2 = _computeRotate(hmEvent,_diskDeg2);
+          $('#wheel2').css('webkitTransform','rotate('+ _diskDeg2 +'deg)');
+      }
+      if (diskId == 3 && $scope.diskActive3){
+          _diskDeg3 = _computeRotate(hmEvent,_diskDeg3);
+          $('#wheelA').css('webkitTransform','rotate('+ _diskDeg3 +'deg)');
+      }
 
     };
     $scope.diskRotateStart = function(diskId, hmEvent) {
@@ -139,6 +165,7 @@ angular.module('myNatiApp.controllers', [])
       $scope.diskActive1 = false;
       $scope.diskActive2 = false;
       $scope.diskActive3 = false;
+      $scope.storeAnimations();
     };
 
     $scope.diskPinch = function(hmEvent) {

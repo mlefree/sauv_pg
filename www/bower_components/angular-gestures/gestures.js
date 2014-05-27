@@ -1463,7 +1463,7 @@ var HGESTURES = {
     hmTransformend : 'transformend'
 };
 
-var VERBOSE = true;
+var VERBOSE = f;
 
 angular.forEach(HGESTURES, function(eventName, directiveName) {
     angular.module('angular-gestures').directive(
