@@ -8,6 +8,7 @@
         -webkit-user-modify: none;
         -webkit-text-size-adjust: none;
 
+   -webkit-transform-style: preserve-3d;
 }
 body {
    /* width:1280px;
@@ -27,6 +28,7 @@ body {
             overflow-y: hidden;
             overflow-x: hidden;
             overflow: hidden;
+
 }
 h1, p {
     padding:0;
@@ -60,7 +62,6 @@ h1, p {
     background-size:1200px 1200px;
     -webkit-box-shadow: 0px 0px 10px rgba(0,0,0, 0.5);
     font-size:400%;
-    -webkit-transform:rotate3d(0,0,0,0deg);
     z-index:10;
 }
 
@@ -73,7 +74,6 @@ h1, p {
     background-size:960px 960px;
     -webkit-box-shadow: 0px 0px 40px rgba(0,0,0, 0.5);
     font-size:400%;
-    -webkit-transform:rotate3d(0,0,0,0deg);
     z-index:11;
 }
 
@@ -85,7 +85,6 @@ h1, p {
     height:680px;
     border-radius:300px;
     background-size:680px 680px;
-    -webkit-transform:rotate3d(0,0,0,0deg);
     z-index:12;
 }
 

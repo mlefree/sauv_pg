@@ -149,12 +149,12 @@ angular.module('myNatiApp.controllers', [])
       var value = 0;
       if (!oldValue) oldValue = 1;
       value = oldValue * hmEvent.gesture.scale;
-      console.log('hmEvent.gesture.scale = '+hmEvent.gesture.scale);
-      console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
-      console.log('hmEvent.gesture.deltaX = '+hmEvent.gesture.deltaX);
-      console.log('hmEvent.gesture.deltaY = '+hmEvent.gesture.deltaY);
-      console.log('hmEvent.gesture.velocityX = '+hmEvent.gesture.velocityX);
-      console.log('hmEvent.gesture.velocityY = '+hmEvent.gesture.velocityY);
+      // console.log('hmEvent.gesture.scale = '+hmEvent.gesture.scale);
+      // console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
+      // console.log('hmEvent.gesture.deltaX = '+hmEvent.gesture.deltaX);
+      // console.log('hmEvent.gesture.deltaY = '+hmEvent.gesture.deltaY);
+      // console.log('hmEvent.gesture.velocityX = '+hmEvent.gesture.velocityX);
+      // console.log('hmEvent.gesture.velocityY = '+hmEvent.gesture.velocityY);
       //if (value > 0) value = 1 / Math.log10(value); else value = 1;
       return value;
     }
