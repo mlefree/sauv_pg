@@ -34,6 +34,10 @@ h1, p {
     margin:0;
 }
 
+nav {
+  boder:2px solid red;
+}
+
 /**
 .icon-zoom-in {background-position: 123px;}
 .icon-search {background-position: 123px;}
@@ -51,6 +55,8 @@ h1, p {
             overflow-x: hidden;
 
     border-radius:600px;
+
+      boder:3px solid green;
 }
 
 
