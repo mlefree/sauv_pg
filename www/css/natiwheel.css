@@ -2,6 +2,12 @@
 * {
     -webkit-touch-callout: none;
     -webkit-user-select:none;
+
+        -webkit-touch-callout: none;
+        -webkit-user-drag: none;
+        -webkit-user-modify: none;
+        -webkit-text-size-adjust: none;
+
 }
 body {
    /* width:1280px;
@@ -11,16 +17,9 @@ body {
     background:white;
     color:#333;
     font-family:Helvetica;
-
-    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
-    -webkit-user-drag: none; /* IMPORTANT : prevent Chrome to drag by itself */
-    -webkit-user-modify: none;
-    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
-
-    -webkit-overflow-scrolling: hidden;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    overflow: hidden;
+            overflow-y: hidden;
+            overflow-x: hidden;
+            overflow: hidden;
 }
 h1, p {
     padding:0;

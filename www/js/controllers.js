@@ -131,6 +131,7 @@ angular.module('myNatiApp.controllers', [])
       var value = 0;
       if (!oldValue) oldValue = 1;
       value = oldValue / hmEvent.gesture.distance * 100 ;
+      if (value > 0) value = 1 / Math.log10(value); else value = 1;
       return value;
     }
 
@@ -171,10 +172,19 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskPinch = function(hmEvent) {
 
       //console.log('hm-pinch="handleGesture($event)"');
-      console.log(hmEvent.type);
+      //console.log(hmEvent.type);
       //$scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
-      $scope.diskZoom = _computeZoom(hmEvent,$scope.diskZoom);
+      _diskZoom = _computeZoom(hmEvent,_diskZoom);
+
+                  var wrapEl  =   $("#wrap");
+
+
+                 // $("#wrap #front *").css({'-webkit-transform-origin': ' '+frameWidth /2+'px '+frameHeight/2+'px'});
+
+                  wrapEl.css({'-webkit-transform-origin-x':'0'});
+                  wrapEl.css({'-webkit-transform-origin-y':'0'});
+                  wrapEl.css({'-webkit-transform':'scale(' + _diskZoom + ',' + _diskZoom + ')'});
 
     };
 
