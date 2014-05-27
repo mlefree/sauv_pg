@@ -110,6 +110,12 @@ angular.module('myNatiApp.controllers', [])
       value = oldValue - value;
       return value;
     }
+    function _computeZoom(hmEvent, oldValue) {
+      var value = 0;
+      if (!oldValue) oldValue = 1;
+      value = oldValue / hmEvent.gesture.distance * 100 ;
+      return value;
+    }
 
     $scope.diskRotate = function(diskId, hmEvent) {
 
@@ -141,6 +147,7 @@ angular.module('myNatiApp.controllers', [])
       console.log(hmEvent.type);
       $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
+      $scope.diskZoom = _computeZoom(hmEvent,$scope.diskZoom);
 
     };
 
