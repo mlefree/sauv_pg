@@ -88,8 +88,10 @@ angular.module('myNatiApp.controllers', [])
     'use strict';
 
     $scope.diskIsFront = true;
-    $scope.diskToggleFront = function(){
+    $scope.diskToggleFront = function(hmEvent){
       $scope.diskIsFront = !$scope.diskIsFront;
+      console.log(hmEvent.type);
+      $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
     };
 
     $scope.diskRotateLog = 'na';
@@ -97,7 +99,7 @@ angular.module('myNatiApp.controllers', [])
 
       console.log('hm-rotate="handleGesture($event)"');
       console.log(hmEvent.type);
-      $scope.diskRotateLog = JSON.stringify(hmEvent);
+      $scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
 
     };
