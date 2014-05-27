@@ -31,49 +31,42 @@
             http://docs.build.phonegap.com/en_US/3.3.0/configuring_preferences.md.html#Preferences
     -->
     <preference name="orientation" value="default" />
-    <preference name="fullscreen" value="false" />
-    <preference name="exit-on-suspend" value="false" />
-
+    <preference name="fullscreen" value="true" /> <!-- ?? -->
+    <preference name="exit-on-suspend" value="false" /> <!-- ?? -->
     <preference name="ios-statusbarstyle" value="black-translucent" />
     <preference name="prerendered-icon" value="false" />
-
     <preference name="detect-data-types" value="true" />
     <preference name="splash-screen-duration" value="5000" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="15" />
     <preference name="android-installLocation" value="internalOnly" />
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
-
 
     <!--    unofficials - test ?
             http://docs.phonegap.com/en/edge/guide_platforms_ios_config.md.html#iOS%20Configuration)
             http://docs.phonegap.com/en/edge/guide_platforms_android_config.md.html#Android%20Configuration
     -->
-    <preference name="webviewbounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="HideKeyboardFormAccessoryBar" value="true" />
-    <preference name="windowSoftInputMode" value="stateVisible|adjustResize" />
-    <preference name="stay-in-webview" value="true" />
-    <preference name="EnableViewportScale" value="true" />
-    <preference name="KeepRunning" value="true"/>
-
+    <preference name="webviewbounce" value="false" /> <!-- ?? -->
+    <preference name="DisallowOverscroll" value="true" /> <!-- ?? -->
+    <preference name="stay-in-webview" value="true" /> <!-- ?? -->
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="EnableViewportScale" value="true" /> <!-- ?? -->
     <preference name="MediaPlaybackRequiresUserAction" value="false" />
-    <preference name="AllowInlineMediaPlayback" value="true" />
+    <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
     <preference name="TopActivityIndicator" value="gray" />
-    <preference name="SuppressesIncrementalRendering" value="true" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" /> <!-- ?? -->
+    <preference name="HideKeyboardFormAccessoryBar" value="true" /> <!-- ?? -->
+    <preference name="SuppressesIncrementalRendering" value="false" />
     <preference name="SplashScreenDelay" value="5000" />
     <preference name="ErrorUrl" value=""/>
-    <preference name="BackgroundColor" value="0x00000000"/>
+    <preference name="BackgroundColor" value=""/>
+    <preference name="KeepRunning" value="true"/>
     <preference name="LoadingDialog" value=","/>
     <preference name="LoadUrlTimeoutValue" value="50000" />
-    <preference name="disable-cursor" value="true" />
-    <preference name="InAppBrowserStorageEnabled" value="true"/>
-    <preference name="GapBetweenPages" value="0"/>
-    <preference name="PageLength" value="0"/>
-    <preference name="PaginationBreakingMode" value="page"/>
-    <preference name="UIWebViewDecelerationSpeed" value="fast" />
+    <preference name="disable-cursor" value="false" /> <!-- ?? -->
+    <preference name="KeyBoardShrinksView" value="false" /> <!-- ?? -->
+
 
     <!-- iOS allows registration of custom URL Schemes. <gap:url-scheme> -->
     <!-- C4P_BUILD_PLUGINS
