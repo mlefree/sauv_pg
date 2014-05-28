@@ -87,71 +87,25 @@ angular.module('myNatiApp.controllers', [])
   .controller('CtrlDisk', ['$scope', function($scope) {
     'use strict';
 
-    $scope.diskZoom = window.localStorage.getItem('diskZoom',1);
+    $scope.diskZoom = 1;
     $scope.diskDeg1 = window.localStorage.getItem('diskDeg1',0);
     $scope.diskDeg2 = window.localStorage.getItem('diskDeg2',0);
     $scope.diskDeg3 = window.localStorage.getItem('diskDeg3',0);
-    $scope.diskActive1 = false;
-    $scope.diskActive2 = false;
-    $scope.diskActive3 = false;
-
-
 
     // outside the scope
-    var _diskZoom = $scope.diskZoom;
-    var _diskTurnClockwize = true;
-    var _diskTurnClockwizeLocked = false;
-    var _diskDeg1 = $scope.diskDeg1;
-    var _diskDeg2 = $scope.diskDeg2;
-    var _diskDeg3 = $scope.diskDeg3;
-    var _wrapWidth = $("#wrap").width();
-    var _wrapHeight = $("#wrap").height();
-    var _wrapCenterX = Math.round(_wrapWidth / 2);
-    var _wrapCenterY = Math.round(_wrapHeight / 2);
+    //var _diskZoom = $scope.diskZoom;
 
     $scope.storeAnimations = function() {
-
-      $scope.diskZoom = _diskZoom;
-      $scope.diskDeg1 = _diskDeg1 % 360;
-      $scope.diskDeg2 = _diskDeg2 % 360;
-      $scope.diskDeg3 = _diskDeg3 % 360;
-      window.localStorage.getItem('diskZoom',$scope.diskZoom);
-      window.localStorage.getItem('diskDeg1',$scope.diskDeg1);
-      window.localStorage.getItem('diskDeg2',$scope.diskDeg2);
-      window.localStorage.getItem('diskDeg3',$scope.diskDeg3);
+      window.localStorage.setItem('diskDeg1',$scope.diskDeg1);
+      window.localStorage.setItem('diskDeg2',$scope.diskDeg2);
+      window.localStorage.setItem('diskDeg3',$scope.diskDeg3);
     };
 
     $scope.diskIsFront = true;
     $scope.diskToggleFront = function(hmEvent){
       $scope.diskIsFront = !$scope.diskIsFront;
-      //console.log(hmEvent.type);
-      //$scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
     };
 
-    //$scope.diskRotateLog = 'na';
-    function _computeRotate(hmEvent, oldValue) {
-      var value = 0;
-      if (!oldValue) oldValue = 0;
-      //value = (hmEvent.gesture.angle * hmEvent.gesture.distance) / ( 100 * Math.abs(hmEvent.gesture.angle));
-      if (!_diskTurnClockwizeLocked) {
-        _diskTurnClockwizeLocked = true;
-        _diskTurnClockwize = ((hmEvent.gesture.deltaX / Math.abs(hmEvent.gesture.deltaX) ) > 0);
-        if (hmEvent.gesture.center.pageY > _wrapCenterY) _diskTurnClockwize = !_diskTurnClockwize;
-      }
-      var turn = _diskTurnClockwize ? 1 : -1;
-
-      value = turn * Math.abs(hmEvent.gesture.velocityX + hmEvent.gesture.velocityY) * 10;// + Math.sin(hmEvent.gesture.angle) * hmEvent.gesture.velocityY;
-      //console.log('value = '+value);
-      // console.log('hmEvent.gesture.angle = '+hmEvent.gesture.angle);
-      // console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
-      // console.log('hmEvent.gesture.deltaX = '+hmEvent.gesture.deltaX);
-      // console.log('hmEvent.gesture.deltaY = '+hmEvent.gesture.deltaY);
-      // console.log('hmEvent.gesture.velocityX = '+hmEvent.gesture.velocityX);
-      // console.log('hmEvent.gesture.velocityY = '+hmEvent.gesture.velocityY);
-      value = oldValue + value;
-
-      return value;
-    }
     function _computeZoom(hmEvent, oldValue) {
       var value = 0;
       if (!oldValue) oldValue = 1;
@@ -166,38 +120,41 @@ angular.module('myNatiApp.controllers', [])
       return value;
     }
 
-    $scope.diskRotate = function(diskId, hmEvent) {
+    function _computeElementDeg(el) {
+        var degCalibre = 0;
 
-      //console.log('hm-rotate="handleGesture($event)"');
-      //console.log(hmEvent.type);
-      //$scope.diskRotateLog = hmEvent.type+' '+hmEvent.gesture.rotation;//JSON.stringify(hmEvent.gesture);
-      //$scope.type = evhmEventent.type;
+        var st = window.getComputedStyle(el[0], null);
+        var tr = st.getPropertyValue("-webkit-transform") ||
+             st.getPropertyValue("-moz-transform") ||
+             st.getPropertyValue("-ms-transform") ||
+             st.getPropertyValue("-o-transform") ||
+             st.getPropertyValue("transform") ||
+             "none";
+        if( tr === "none") return degCalibre;
+        //console.log('Matrix: ' + tr);
 
-      if (diskId == 1 && $scope.diskActive1) {
-          _diskDeg1 = _computeRotate(hmEvent,_diskDeg1);
-          $('#wheel1').css('-webkit-transform','rotate('+ _diskDeg1 +'deg)');
-      }
-      if (diskId == 2 && $scope.diskActive2){
-          _diskDeg2 = _computeRotate(hmEvent,_diskDeg2);
-          $('#wheel2').css('-webkit-transform','rotate('+ _diskDeg2 +'deg)');
-      }
-      if (diskId == 3 && $scope.diskActive3){
-          _diskDeg3 = _computeRotate(hmEvent,_diskDeg3);
-          $('#wheelA').css('-webkit-transform','rotate('+ _diskDeg3 +'deg)');
-      }
+        var values = tr.split('(')[1];
+            values = values.split(')')[0];
+            values = values.split(',');
+        var a = values[0];
+        var b = values[1];
+        var c = values[2];
+        var d = values[3];
+        var radians = Math.atan2(b, a);
+        if ( radians < 0 ) {
+          radians += (2 * Math.PI);
+        }
+        degCalibre = Math.round( radians * (180/Math.PI));
 
-    };
-    $scope.diskRotateStart = function(diskId, hmEvent) {
-      if ($scope.diskActive1 || $scope.diskActive2 || $scope.diskActive3) return;
-      if (diskId == 1) $scope.diskActive1 = true;
-      if (diskId == 2) $scope.diskActive2 = true;
-      if (diskId == 3) $scope.diskActive3 = true;
-    };
+        return degCalibre;
+    }
+
     $scope.diskRotateEnd = function(diskId, hmEvent) {
-      $scope.diskActive1 = false;
-      $scope.diskActive2 = false;
-      $scope.diskActive3 = false;
-      _diskTurnClockwizeLocked = false;
+
+      if (diskId == 1) $scope.diskDeg1 = _computeElementDeg(hmEvent.element);
+      if (diskId == 2) $scope.diskDeg2 = _computeElementDeg(hmEvent.element);
+      if (diskId == 3) $scope.diskDeg3 = _computeElementDeg(hmEvent.element);
+
       $scope.storeAnimations();
     };
 
