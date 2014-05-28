@@ -13,9 +13,7 @@
     <link id="natistyle" rel="stylesheet" type="text/css" href="css/natiwheel_fr_acidule.css">
 
     <script language="javascript">
-    var blockMove = function (e) {
-            if (e.preventDefault) e.preventDefault() ;
-     }
+      var blockMove = function (e) {if (e.preventDefault) e.preventDefault();};
     </script>
 </head>
 <body ng-controller="CtrlNavigation" onscroll="blockMove(e)" ontouchmove="blockMove(e)">
@@ -23,28 +21,18 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-
-
-
   <div ng-view></div>
 
-
-
-  <nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-      <ul class="nav nav-pills nav-justified">
-          <li><a>&nbsp;</a></li>
-          <li>
-              <a class="btn" ng-show="navigIsLocked" ng-click="navigToggleLock()"><i class="glyphicon glyphicon-play"></i></a>
-              <a class="btn" ng-hide="navigIsLocked" ng-click="navigToggleLock()"><i class="glyphicon glyphicon-stop"></i></a>
+  <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <ul class="nav navbar-nav" style="width:100%;margin:0;">
+          <li class="col-xs-8 col-xs-offset-2" style="padding:0;margin-right:0;" ng-class="{active:!navigIsLocked()}">
+              <a class="btn" ng-click="navigToggleLock()"><i class="glyphicon glyphicon-record"></i></a>
           </li>
-          <li>
-              <a href="#/help"><i class="glyphicon glyphicon-question-sign"></i></a>
+          <li class="col-xs-2" style="padding:0;margin:0;">
+              <a class="btn"  href="#/help"><i class="glyphicon glyphicon-question-sign"></i></a>
           </li>
       </ul>
-    </div>
   </nav>
-
 
   <!-- App JS -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>

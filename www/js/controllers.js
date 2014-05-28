@@ -9,10 +9,16 @@ angular.module('myNatiApp.controllers', [])
     'use strict';
 
     // Disk Lock
-    $scope.navigIsLocked = window.localStorage.getItem("navigIsLocked", false);
-    $scope.navigToggleLock = function(){
-      $scope.navigIsLocked = !$scope.navigIsLocked;
-      window.localStorage.setItem("navigIsLocked", $scope.navigIsLocked);
+    $scope.navigBIsLocked = window.localStorage.getItem("navigIsLocked") || true;
+    $scope.navigToggleLock = function(force){
+      if (force) $scope.navigBIsLocked = force;
+      else $scope.navigBIsLocked = !$scope.navigBIsLocked;
+      window.localStorage.setItem("navigIsLocked", $scope.navigBIsLocked);
+    };
+    $scope.navigIsLocked = function(){
+      var b = ($scope.navigBIsLocked === true);
+      //console.log('navigIsLocked :'+b);
+      return b;
     };
 
 
@@ -47,16 +53,16 @@ angular.module('myNatiApp.controllers', [])
 
 
 
-            $('#f1').click(function() {
-                //alert('F1');
-                var data = {direction:'left', velocity : 2};
-                handleTouchyDrag(null,null, data);
-            });
-            $('#f2').click(function() {
-                //alert('F2');
-                var data = {direction:'right', velocity : 2};
-                handleTouchyDrag(null,null, data);
-            });
+            // $('#f1').click(function() {
+            //     //alert('F1');
+            //     var data = {direction:'left', velocity : 2};
+            //     handleTouchyDrag(null,null, data);
+            // });
+            // $('#f2').click(function() {
+            //     //alert('F2');
+            //     var data = {direction:'right', velocity : 2};
+            //     handleTouchyDrag(null,null, data);
+            // });
 
             // $('#natistyleSelector').change(function() {
             //
@@ -70,7 +76,7 @@ angular.module('myNatiApp.controllers', [])
   }])
   .controller('CtrlHelp', ['$scope', function($scope) {
     'use strict';
-    $scope.helpLang = window.localStorage.getItem('helpLang','EN');
+    $scope.helpLang = window.localStorage.getItem('helpLang') || 'EN';
     $scope.setHelpLang = function(langCode){
       $scope.helpLang = langCode;
       window.localStorage.setItem('helpLang',$scope.helpLang);
@@ -84,18 +90,20 @@ angular.module('myNatiApp.controllers', [])
 
 
   }])
-  .controller('CtrlDisk', ['$scope', function($scope) {
+  .controller('CtrlDisk', ['$scope','$timeout', function($scope,$timeout) {
     'use strict';
 
     $scope.diskZoom = 1;
-    $scope.diskDeg1 = window.localStorage.getItem('diskDeg1',0);
-    $scope.diskDeg2 = window.localStorage.getItem('diskDeg2',0);
-    $scope.diskDeg3 = window.localStorage.getItem('diskDeg3',0);
+    $scope.diskDeg0 = window.localStorage.getItem('diskDeg0') || 0;
+    $scope.diskDeg1 = window.localStorage.getItem('diskDeg1') || 0;
+    $scope.diskDeg2 = window.localStorage.getItem('diskDeg2') || 0;
+    $scope.diskDeg3 = window.localStorage.getItem('diskDeg3') || 0;
 
     // outside the scope
     //var _diskZoom = $scope.diskZoom;
 
     $scope.storeAnimations = function() {
+      window.localStorage.setItem('diskDeg0',$scope.diskDeg0);
       window.localStorage.setItem('diskDeg1',$scope.diskDeg1);
       window.localStorage.setItem('diskDeg2',$scope.diskDeg2);
       window.localStorage.setItem('diskDeg3',$scope.diskDeg3);
@@ -104,12 +112,13 @@ angular.module('myNatiApp.controllers', [])
     $scope.diskIsFront = true;
     $scope.diskToggleFront = function(hmEvent){
       $scope.diskIsFront = !$scope.diskIsFront;
+      $scope.navigToggleLock(true);
     };
 
     function _computeZoom(hmEvent, oldValue) {
       var value = 0;
       if (!oldValue) oldValue = 1;
-      value = oldValue * hmEvent.gesture.scale;
+      value = hmEvent.gesture.scale / 2;
       // console.log('hmEvent.gesture.scale = '+hmEvent.gesture.scale);
       // console.log('hmEvent.gesture.distance = '+hmEvent.gesture.distance);
       // console.log('hmEvent.gesture.deltaX = '+hmEvent.gesture.deltaX);
@@ -121,9 +130,9 @@ angular.module('myNatiApp.controllers', [])
     }
 
     function _computeElementDeg(el) {
-        var degCalibre = 0;
+        var degCalibre = null;
 
-        var st = window.getComputedStyle(el[0], null);
+        var st = window.getComputedStyle(el, null);
         var tr = st.getPropertyValue("-webkit-transform") ||
              st.getPropertyValue("-moz-transform") ||
              st.getPropertyValue("-ms-transform") ||
@@ -151,11 +160,16 @@ angular.module('myNatiApp.controllers', [])
 
     $scope.diskRotateEnd = function(diskId, hmEvent) {
 
-      if (diskId == 1) $scope.diskDeg1 = _computeElementDeg(hmEvent.element);
-      if (diskId == 2) $scope.diskDeg2 = _computeElementDeg(hmEvent.element);
-      if (diskId == 3) $scope.diskDeg3 = _computeElementDeg(hmEvent.element);
+      var deg = _computeElementDeg(hmEvent.srcElement);
 
-      $scope.storeAnimations();
+      $timeout(function(){
+        if (diskId === 0 && deg !== null) $scope.diskDeg0 = deg;
+        if (diskId === 1 && deg !== null) $scope.diskDeg1 = deg;
+        if (diskId === 2 && deg !== null) $scope.diskDeg2 = deg;
+        if (diskId === 3 && deg !== null) $scope.diskDeg3 = deg;
+
+        $scope.storeAnimations();
+      },10);
     };
 
     $scope.diskPinch = function(hmEvent) {
@@ -164,195 +178,19 @@ angular.module('myNatiApp.controllers', [])
       //console.log(hmEvent.type);
       //$scope.diskRotateLog = hmEvent.type;//JSON.stringify(hmEvent.gesture);
       //$scope.type = evhmEventent.type;
-      _diskZoom = _computeZoom(hmEvent,_diskZoom);
+      $scope.diskZoom = _computeZoom(hmEvent,$scope.diskZoom);
+      if ($scope.diskZoom >= 4) $scope.diskZoom = 4;
+      if ($scope.diskZoom <= 0.2) $scope.diskZoom = 0.2;
 
-                  var wrapEl  =   $("#wrap");
-
-
-                 // $("#wrap #front *").css({'-webkit-transform-origin': ' '+frameWidth /2+'px '+frameHeight/2+'px'});
-
-                  wrapEl.css({'-webkit-transform-origin-x':'0'});
-                  wrapEl.css({'-webkit-transform-origin-y':'0'});
-                  wrapEl.css({'-webkit-transform':'scale(' + _diskZoom + ',' + _diskZoom + ')'});
-
-    };
-
-    /*
-    var degs1 = 0;
-    var degs2 = 0;
-    var degs3 = 0;
-    var lock = false;
-
-    var recto = true;
-    var zoom = 1;
+      //var wrapEl  =   $("#wrap");
 
 
+      // $("#wrap #front *").css({'-webkit-transform-origin': ' '+frameWidth /2+'px '+frameHeight/2+'px'});
 
-    var bodyWidth = $("body").width();
-
-
-
-                zoom = zoom * bodyWidth / 1280;
-                degs1 = getDeg(1);
-                degs2 = getDeg(2);
-                degs3 = getDeg(3);
-                handleTouchyPinch();
-                handleTouchyReset();
-
-
-
-
-    var setDeg = function(deg, id){
-
-        //var foo = localStorage.getItem("bar");
-        // ...
-        var newDeg = parseInt(deg);
-        window.localStorage.setItem("n_"+id, newDeg);
-    };
-
-    var getDeg = function(id){
-
-        var did = "n_"+id;
-        var deg =  0;
-        if (typeof window.localStorage[did] == 'undefined')
-            deg =  0;
-        else
-            deg = window.localStorage.getItem("n_"+id);
-
-        var degInt = parseInt(deg);
-        return degInt;
-        // ...
-        //localStorage.setItem("bar", foo);
-    };
-
-    var handleTouchyReset = function(){
-         $('#wheel1').css('webkitTransform','rotate3d(0,0,0,'+ degs1 +'deg)');
-         $('#wheel2').css('webkitTransform','rotate3d(0,0,0,'+ degs2 +'deg)');
-         $('#wheelA').css('webkitTransform','rotate3d(0,0,0,'+ degs3 +'deg)');
+      //wrapEl.css({'-webkit-transform-origin-x':'0'});
+      //wrapEl.css({'-webkit-transform-origin-y':'0'});
+      //wrapEl.css({'-webkit-transform':'scale(' + _diskZoom + ',' + _diskZoom + ')'});
 
     };
-
-    var handleTouchyRotate1 = function (e, phase, $target, data,onlyOneTime) {
-
-        if (phase === 'move') {
-            degs1 += data.degreeDelta;// / zoom;
-
-           // $('#wheel1').css({'-webkit-transform-origin': ' '+frameWidth /2+'px '+frameHeight/2+'px'});
-            $('#wheel1').css('webkitTransform','rotate3d(0,0,0,'+ degs1 +'deg)'); // 3d transforms are not working on the galaxy tab 7" ?
-            //$target.css('webkitTransform','rotate('+ degs +'deg) transformZ(0)'); // check this out.  much worse on motorola xoom.
-            setDeg(degs1,1);
-        }
-
-    };
-    var handleTouchyRotate2 = function (e, phase, $target, data,onlyOneTime) {
-
-
-        if (phase === 'move') {
-            degs2 += data.degreeDelta;// / zoom;
-            $('#wheel2').css('webkitTransform','rotate3d(0,0,0,'+ degs2 +'deg)');
-            setDeg(degs2,2);
-        }
-
-    };
-    var handleTouchyRotate3 = function (e, phase, $target, data,onlyOneTime) {
-
-        if (phase === 'move') {
-            degs3 += data.degreeDelta;// / zoom;
-            $('#wheelA').css('webkitTransform','rotate3d(0,0,0,'+ degs3 +'deg)');
-            setDeg(degs3,3);
-        }
-
-    };
-    var handleTouchyRotateAll = function (e, phase, $target, data,onlyOneTime) {
-
-        if (phase === 'move') {
-                handleTouchyRotate1(e, phase, $target, data,true);
-                handleTouchyRotate2(e, phase, $target, data,true);
-                handleTouchyRotate3(e, phase, $target, data,true);
-        }
-
-    };
-
-     var handleTouchyDrag = function (event, $target, data) {
-        if ( recto && data.direction == 'left' && data.velocity > 1) {
-            $('#wrap').addClass('flip');
-            $('#f1').hide();$('#f2').show();
-            recto = false;
-        }
-        else if (!recto  && data.velocity > 1) {
-            $('#wrap').removeClass('flip');
-            $('#f2').hide();$('#f1').show();
-            recto = true;
-        }
-    };
-
-    var handleTouchyPinch = function (e, $target, data) {
-            //alert('scale(');
-            //alert('scale(' + data.scale + ',' + data.scale + ')');
-            //$target.css({'webkitTransform':'scale(' + data.scale + ',' + data.scale + ')'});
-
-
-
-            if (data && data.scale) {
-                //alert('scale(' + data.scale + ',' + data.scale + ')');
-                zoom = zoom * (data.scale + 50) / 51;
-            }
-
-            if(zoom <= 0.25) zoom = 0.25;
-            else  if(zoom >= 2) zoom = 2;
-
-            console.log('handleTouchyPinch '+zoom);
-
-            var wrapEl  =   $("#wrap");
-
-
-           // $("#wrap #front *").css({'-webkit-transform-origin': ' '+frameWidth /2+'px '+frameHeight/2+'px'});
-
-            wrapEl.css({'-webkit-transform-origin-x':'0'});
-            wrapEl.css({'-webkit-transform-origin-y':'0'});
-            wrapEl.css({'-webkit-transform':'scale(' + zoom + ',' + zoom + ')'});
-            console.log('handleTouchyPinch '+ wrapEl[0].offsetWidth);
-
-            //$("#wrap").css({'top':'0'});
-            //$("#wrap").css({'left':'0'});
-
-            //wrapEl.offsetWidth = frameWidth * zoom;
-            //$("#wrap").offsetWHeight = frameHeight * zoom;
-            //parent.wheelFrame.src="index-wheel.html";
-            //parent.wheelFrame.css({'webkitTransform':'scale(' + data.scale + ',' + data.scale + ')'});
-            //$("#wheel1").css({'webkitTransform':'scale(' + zoom + ',' + zoom + ')'});
-            //$("#wheel2").css({'webkitTransform':'scale(' + zoom + ',' + zoom + ')'});
-            //$("#wheelA").css({'webkitTransform':'scale(' + zoom + ',' + zoom + ')'});
-
-            //$("#frame").css('-webkit-transform','scale('+data.scale+',' + data.scale + ')');
-
-            //console.log('handleTouchyPinch '+parent.wheelFrame.width());
-
-            //$("#body").width(bodyWidth * zoom);
-            //$("#body").height(bodyHeight * zoom);
-            //console.log('handleTouchyPinch '+parent.wheelFrame.width());
-
-
-    };
-
-    var unbindAll = function() {
-        $('#wheel1').unbind();
-        $('#wheel2').unbind();
-        $('#wheelA').unbind();
-    };
-    var bindAll = function() {
-        unbindAll();
-        $('#wheel1').bind('touchy-rotate', handleTouchyRotate1);
-        $('#wheel2').bind('touchy-rotate', handleTouchyRotate2);
-        $('#wheelA').bind('touchy-rotate', handleTouchyRotate3);
-
-        //$("#mainFunction").bind('touchy-swipe', handleTouchyDrag);
-        //$("#wrap .back").bind('touchy-swipe', handleTouchyDrag);
-        $("#mainFunction").bind('touchy-pinch', handleTouchyPinch);
-        $("#wrap .back").bind('touchy-pinch', handleTouchyPinch);
-        $("#mainFunction").bind('touchy-rotate', handleTouchyRotateAll);
-    };
-*/
-
 
   }]);

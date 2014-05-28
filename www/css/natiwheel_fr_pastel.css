@@ -1,23 +1,17 @@
-  
 
-#wheel1 {
-    background:url(../img/fr_pastel_recto_grand.png) 0 0 no-repeat;
+
+.wheel1 {
+    background:url(../img/fr_pastel_recto_grand_1200x1200.jpg) 50% 50% no-repeat;
 }
 
-#wheel2 {
-    background:url(../img/fr_pastel_recto_petit.png) 0 0 no-repeat;
+.wheel2 {
+    background:url(../img/fr_pastel_recto_petit_960x960.png) 50% 50% no-repeat;
 }
 
-
-#wheelA {
-    background:url(../img/wheel_a.png) 0 0 no-repeat;
+.wheelA {
+    background:url(../img/wheel_a_680x680.png) 50% 50% no-repeat;
 }
 
-
-#wrap .back {
-    background:url(../img/fr_pastel_verso.png) 0 0 no-repeat;
+.back {
+    background:url(../img/fr_pastel_verso_1200x1200.jpg) 50% 50% no-repeat;
 }
-
-
-
-

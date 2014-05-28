@@ -1,64 +1,45 @@
 <!DOCTYPE html>
 
-<div    id="f1"
-        style="position:absolute;top:0;left:0"
-        class="btn btn-lg"
-        ng-show="diskIsFront"
-        ng-click="diskToggleFront()">
-    <i class="glyphicon glyphicon-info-sign"></i>
-</div>
-<div    id="f2"
-        style="position:absolute;top:0;left:0"
-        class="btn btn-lg"
-        ng-hide="diskIsFront"
-        ng-click="diskToggleFront()">
-    <i class="glyphicon glyphicon-ok-sign"></i>
-</div>
-<!--
-{{diskActive1}} - {{diskActive2}} - {{diskActive3}}<br>
-z:{{diskZoom}}
-<div id="Log"></div>
-log:{{diskRotateLog}} - {{diskDeg1}} - {{diskDeg2}} - {{diskDeg3}}<br>
 
-z:{{diskZoom}}
+<nav style="position:absolute;top:0;left:0">
+  <a class="btn"
+    ng-show="diskIsFront"
+    ng-click="diskToggleFront()">
+      <i class="glyphicon glyphicon-info-sign"></i>
+  </a>
+  <a class="btn"
+    ng-hide="diskIsFront"
+    ng-click="diskToggleFront()">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+  </a>
+</nav>
 
 
-    hm-swipe="diskToggleFront($event)"
-    hm-pinch="diskPinch($event)"
--->
-<div id="wrap" hm-swipe="diskToggleFront($event)" hm-pinch="diskPinch($event)" syle="-webkit-transform:scale({{diskZoom}},{{diskZoom}})">
-    <div class="front" ng-show="diskIsFront">
-        <div id="wheel1" nati-turn hm-dragend="diskRotateEnd(1,$event)" ></div> <!-- style="-webkit-transform:rotate({{diskDeg1}}deg)"-->
-        <div id="wheel2" nati-turn hm-dragend="diskRotateEnd(2,$event)" ></div>
-        <div id="wheelA" nati-turn hm-dragend="diskRotateEnd(3,$event)" ></div>
+<div ng-switch="navigIsLocked()">
+  <div ng-switch-default
+      class="wrap"
+      style="-webkit-transform:scale({{diskZoom}},{{diskZoom}})">
+      <div  class="front">
+              <div class="wheel1" nati-turn hm-dragend="diskRotateEnd(1,$event)" style="-webkit-transform:rotate3d(0,0,1,{{diskDeg1}}deg)"></div>
+              <div class="wheel2" nati-turn hm-dragend="diskRotateEnd(2,$event)" style="-webkit-transform:rotate3d(0,0,1,{{diskDeg2}}deg)"></div>
+              <div class="wheelA" nati-turn hm-dragend="diskRotateEnd(3,$event)" style="-webkit-transform:rotate3d(0,0,1,{{diskDeg3}}deg)"></div>
+      </div>
+  </div>
+
+  <div ng-switch-when="true"
+      class="wrap"
+      style="-webkit-transform:scale({{diskZoom}},{{diskZoom}})"
+
+      hm-pinch="diskPinch($event)"> <!-- hm-swipe="diskToggleFront($event)"-->
+      <div  class="front"
+            ng-show="diskIsFront"
+            nati-turn>
+              <div class="wheel1" style="-webkit-transform:rotate3d(0,0,1,{{diskDeg1}}deg)"></div>
+              <div class="wheel2" style="-webkit-transform:rotate3d(0,0,1,{{diskDeg2}}deg)"></div>
+              <div class="wheelA" style="-webkit-transform:rotate3d(0,0,1,{{diskDeg3}}deg)"></div>
+      </div>
+      <div class="back" ng-hide="diskIsFront"></div>
     </div>
-    <div class="back" ng-hide="diskIsFront"></div>
     <!--<div id="mainFunction">
     </div>-->
 </div>
-
-
-<!--
-<div class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="navbar-inner">
-            <div class="row">
-
-                <div class="col-2" >
-                </div>
-                <div class="col-8" style="text-align: center;">
-                    <a id="lock"><i class="icon-lock icon-2x" style="padding: 6px;"></i></a>
-                    <a id="unlock"><i class="icon-unlock icon-2x" style="padding: 6px;"></i></a>
-
-                </div>
-                <div class="col-2" style="text-align: right;">
-                    <a id="help" href="#helpModal" data-target="#helpModal" data-toggle="modal" data-backdrop="true">
-                        <i class="icon-question-sign icon-2x" style="padding: 6px;"></i>
-                    </a>
-                </div>
-
-
-
-            </div>
-    </div>
-</div>
--->
