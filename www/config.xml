@@ -115,6 +115,9 @@
     <icon src="res/iphone/appicon.png" gap:platform="ios" width="57" height="57" />
     <icon src="res/iphone/appicon@2x.png" gap:platform="ios" width="114" height="114" />
 
+    <icon src="res/iphone/appicon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="res/iphone/appicon-72@2x.png" gap:platform="ios" width="144" height="144" />
+
     <icon src="res/iphone/appicon-60.png" gap:platform="ios" width="60" height="60" />
     <icon src="res/iphone/appicon-60@2x.png" gap:platform="ios" width="120" height="120" />
     <!-- iPad -->
