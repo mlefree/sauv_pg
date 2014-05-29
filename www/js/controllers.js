@@ -9,11 +9,11 @@ angular.module('myNatiApp.controllers', [])
     'use strict';
 
     // Disk Lock
-    $scope.navigBIsLocked = window.localStorage.getItem("navigIsLocked") || true;
+    $scope.navigBIsLocked = true;
     $scope.navigToggleLock = function(force){
       if (force) $scope.navigBIsLocked = force;
       else $scope.navigBIsLocked = !$scope.navigBIsLocked;
-      window.localStorage.setItem("navigIsLocked", $scope.navigBIsLocked);
+      //window.localStorage.setItem("navigIsLocked", $scope.navigBIsLocked);
     };
     $scope.navigIsLocked = function(){
       var b = ($scope.navigBIsLocked === true);
