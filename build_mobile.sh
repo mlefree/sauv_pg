@@ -19,7 +19,7 @@ sed -i.bak "s#$oldstring#$newstring#g" build/config.xml
 
 
 cd build
-cordova platform add ios
+#cordova platform add ios
 cordova platform add android
 
 
@@ -44,15 +44,17 @@ cordova plugin add org.apache.cordova.console
 
 cordova plugin add https://github.com/phonegap-build/GAPlugin.git
 
-cordova build ios
-cordova build android
+## iOS
+#cordova build ios
 
+## Android
+cordova build android
 cd platforms/android
 ant release
-
 jarsigner -keystore ../../../android_key/apps4pro-key.keystore -storepass apps4pro -digestalg SHA1 -sigalg MD5withRSA bin/NatiWheel-release-unsigned.apk mykey
 cp bin/NatiWheel-release-unsigned.apk ../../NatiWheel.apk
 zipalign -f 4 ../../NatiWheel.apk ../../NatiWheel-aligned.apk
 cd ../..
+
 
 cd ..
