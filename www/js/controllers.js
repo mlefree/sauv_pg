@@ -25,9 +25,9 @@ angular.module('myNatiApp.controllers', [])
 
     $scope.navigStyles =  [
                             {code:'en_acide',   css:'css/natiwheel_en_acidule.css',  title:'Acidule (EN)'},
-                            {code:'fr_acide',   css:'css/natiwheel_fr_acidule.css',  title:'Acidule (FR)'},
-                            {code:'fr_mixte',   css:'css/natiwheel_fr_mixte.css',    title:'Mixte (FR)'},
-                            {code:'fr_pastel',   css:'css/natiwheel_fr_pastel.css',  title:'Pastel (FR)'}
+                            {code:'fr_acide',   css:'css/natiwheel_fr_acidule.css',  title:'Acidule (FR)'}
+                            //{code:'fr_mixte',   css:'css/natiwheel_fr_mixte.css',    title:'Mixte (FR)'},
+                            //{code:'fr_pastel',   css:'css/natiwheel_fr_pastel.css',  title:'Pastel (FR)'}
                           ];
     $scope.navigStyle = JSON.parse(window.localStorage.getItem('navigStyle'));
     $scope.setNavigStyle = function(styleCode){
@@ -93,7 +93,7 @@ angular.module('myNatiApp.controllers', [])
   .controller('CtrlDisk', ['$scope','$timeout', function($scope,$timeout) {
     'use strict';
 
-    $scope.diskZoom = 1;
+    $scope.diskZoom = 0.5;
     $scope.diskDeg0 = window.localStorage.getItem('diskDeg0') || 0;
     $scope.diskDeg1 = window.localStorage.getItem('diskDeg1') || 0;
     $scope.diskDeg2 = window.localStorage.getItem('diskDeg2') || 0;

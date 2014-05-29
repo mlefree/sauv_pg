@@ -78,8 +78,8 @@ directive('appVersion', ['version', function(version) {
                 //var x = document.elementFromPoint(eventX, eventY);
                 //var width = getComputedStyle(el[0]).getPropertyValue('width');
                 //var height = getComputedStyle(el[0]).getPropertyValue('height');
-                elCenterX = ((el[0].offsetWidth / 2 * calibre.scale) + el[0].offsetLeft);
-                elCenterY = ((el[0].offsetHeight / 2 * calibre.scale) + el[0].offsetTop);
+                elCenterX =  calibre.scale * ((el[0].offsetWidth/2) + (el[0].offsetLeft));
+                elCenterY =  calibre.scale * ((el[0].offsetHeight/2) + (el[0].offsetTop));
               }
 
               if (eventX == elCenterX || eventY == elCenterY) return deg;

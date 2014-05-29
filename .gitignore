@@ -16,6 +16,7 @@ pids
 logs
 results
 build
+_old
 
 npm-debug.log
 node_modules
