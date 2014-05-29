@@ -102,8 +102,8 @@
     <icon gap:platform="android" gap:density="xhdpi" src="res/android/res/drawable-xhdpi/appicon.png" />
 
     <!-- android splash portrait -->
-    <gap:splash src="res/android/images/res-long-port-ldpi/default.png" gap:platform="android" gap:density="xhdpi"/>
-    <gap:splash src="res/android/images/res-long-port-ldpi/default.png"  gap:platform="android" gap:density="hdpi"/>
+    <gap:splash src="res/android/images/res-long-port-xhdpi/default.png" gap:platform="android" gap:density="xhdpi"/>
+    <gap:splash src="res/android/images/res-long-port-hdpi/default.png"  gap:platform="android" gap:density="hdpi"/>
     <gap:splash src="res/android/images/res-long-port-ldpi/default.png"  gap:platform="android" gap:density="ldpi"/>
 
     <!-- android splash landscape -->

@@ -17,6 +17,7 @@ logs
 results
 build
 _old
+android_key
 
 npm-debug.log
 node_modules
