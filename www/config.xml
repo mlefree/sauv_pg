@@ -18,7 +18,7 @@
     <gap:platform name="blackberry" />
     <gap:platform name="winphone" />
 
-    <preference name="phonegap-version" value="3.4.0" />
+    <preference name="phonegap-version" value="3.5.0" />
 
 
     <!-- iOS allows registration of custom URL Schemes. <gap:url-scheme>  -->

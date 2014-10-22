@@ -5,7 +5,7 @@ echo ""
 echo "[--- Sauvane : DEV Build mobile ---]"
 echo ""
 
-#sudo npm update -g cordova
+sudo npm update -g cordova
 rm -rf build
 
 cordova create build com.apps4pro.sauvane NatiWheel
@@ -19,7 +19,7 @@ sed -i.bak "s#$oldstring#$newstring#g" build/config.xml
 
 
 cd build
-#cordova platform add ios
+cordova platform add ios
 cordova platform add android
 
 
@@ -42,10 +42,10 @@ cordova plugin add org.apache.cordova.splashscreen
 cordova plugin add org.apache.cordova.inappbrowser
 cordova plugin add org.apache.cordova.console
 
-cordova plugin add https://github.com/phonegap-build/GAPlugin.git
+cordova plugin add https://github.com/phonegap-build/GAPlugin.git#GA-3.0
 
 ## iOS
-#cordova build ios
+cordova build ios
 
 ## Android
 cordova build android
